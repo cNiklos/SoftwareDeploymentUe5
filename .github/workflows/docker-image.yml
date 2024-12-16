@@ -20,5 +20,5 @@ jobs:
 
     - name: Push image to Docker hub
       run: |
-        docker login -u clemensn -ü ${{ secrets.DOCKER_HUB_TOKEN }}
+        docker login -u clemensn -p ${{ secrets.DOCKER_HUB_TOKEN }}
         docker push clemensn/software-deployment-ue5/latest
