@@ -57,7 +57,7 @@ app.get('/test', function (req, res) {
 
 // Hello World for index page
 app.get('/', function (req, res) {
-  return res.send('Test for automatic redeployment!');
+  return res.send('Test for automatic redeployment! Nr. 2');
 });
 
 app.get('/api', function (req, res) {
