@@ -55,17 +55,9 @@ app.get('/test', function (req, res) {
   return res.send('This is a test endpoint!');
 });
 
-app.get('/test1', function (req, res) {
-  return res.send('This is another test endpoint!');
-});
-
-app.get('/test2', function (req, res) {
-  return res.send('And another');
-});
-
 // Hello World for index page
 app.get('/', function (req, res) {
-  return res.send('Hello World!');
+  return res.send('Test for automatic redeployment! Nr. 4');
 });
 
 app.get('/api', function (req, res) {
