@@ -3,7 +3,7 @@ name: Release Build and Deploy to Docker Hub
 on:
   pull_request:
     branches: 
-      - 'release/*'
+      - 'release'
   workflow_dispatch:
 
 jobs:
