@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_cf873da339554b5fb3bfaebd8a7ee129 }}/clemensn/software-deployment-ue5:${{ github.sha }}
+        tags: index.docker.io/clemensn/software-deployment-ue5:dev
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'Uebung5WebApp1'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_0b6d33740493454e89e2725aad0462d6 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_cf873da339554b5fb3bfaebd8a7ee129 }}/clemensn/software-deployment-ue5:${{ github.sha }}'
+        images: 'index.docker.io/clemensn/software-deployment-ue5:dev'
