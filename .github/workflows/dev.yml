@@ -1,0 +1,63 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build, test and deploy to Dev
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+
+  test:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Run Node.js tests
+      run: |
+        npm install
+        npm test
+
+  build:
+    runs-on: 'ubuntu-latest'
+    needs: test
+
+    steps:
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to registry
+      uses: docker/login-action@v2
+      with:
+        registry: https://index.docker.io/v1/
+        username: ${{ secrets.AzureAppService_ContainerUsername_cf873da339554b5fb3bfaebd8a7ee129 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_7d41272f074141e290df25d8d3a4e7ef }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: index.docker.io/clemensn/software-deployment-ue5:dev
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'Uebung5WebApp1'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_0b6d33740493454e89e2725aad0462d6 }}
+        images: 'index.docker.io/clemensn/software-deployment-ue5:dev'
